@@ -1,0 +1,17 @@
+--- 
+- name: set up webserver
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Nginx
+      shell: amazon-linux-extras install nginx1 -y
+
+    - name: Create contents
+      copy:
+        dest: /usr/share/nginx/html/index.html
+        content: "<html><h1>Hello World!</h1></html>"
+        owner: ec2-user
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
